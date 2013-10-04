@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--*********************************************************************-->
+<!-- Copyright (c) Instytut Systemów Przestrzennych i Katastralnych S.A. -->
+<!--*********************************************************************-->
+<xsd:schema
+    targetNamespace="http://iuip.ispik.pl/rest/login/login/1.0.0"
+    xmlns="http://iuip.ispik.pl/rest/login/login/1.0.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    jaxb:version="2.0"
+    >
+    <xsd:annotation>
+        <xsd:appinfo>
+            <jaxb:schemaBindings>
+                <jaxb:package name="pl.ispik.iuip.rest.login.schemas.login"/>
+            </jaxb:schemaBindings>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:element name="request">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jaxb:class name="LoginRequest"/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="tenant" type="xsd:string" minOccurs="0"/>
+                <xsd:choice>
+                    <xsd:element name="anonymous">
+                        <xsd:complexType/>
+                    </xsd:element>
+                    <xsd:sequence>
+                        <xsd:element name="login" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="response">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jaxb:class name="LoginResponse"/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="token" type="TokenType" minOccurs="0"/>
+                <xsd:element name="message" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="TokenType">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jaxb:class name="Token"/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="cookieName" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+</xsd:schema>
